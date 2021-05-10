@@ -7,13 +7,15 @@
 
 ## How to use?
 ```python
-from foxTemplateEngine.template_engine import transform # transform() is a func for render your template to vanilla HTML
+from foxTemplateEngine.template_engine import FoxEngine # transform() is a func for render your template to vanilla HTML
 
-transform('test', {}) # test - path to your file, {} - context
+obj = FoxEngine('path', {}) # 'path' - path to template, {} - context
+obj.getRenderedTemplateAsText() # getting a rendered template
+obj.writeToFile('new_path') # saving to file by path: new_path
 ```
 
 ## Example
-### Before (project/test)
+### Before (project/test.fox)
 ```html
 body
  % repeat 4 %
@@ -32,9 +34,15 @@ body
 ```python
 from foxTemplateEngine.template_engine import transform
 
-transform('test', {
-  'var': 'Hello, World!',
+obj = FoxEngine('test.fox', {
+    'var': 'Hello, World!'
 })
+obj.getRenderedTemplateAsText()
+obj.writeToFile('test.html')
+
+"""
+function getRenderedTemplateAsText() is called first and only then writeToFile()
+"""
 ```
 ### After (project/test.html)
 ```html
