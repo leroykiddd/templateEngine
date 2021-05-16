@@ -3,21 +3,6 @@ import re
 import os
 
 class FoxEngine:
-    tags: list = [
-        'a', 'abbr', 'adress', 'area',
-        'article', 'aside', 'audio', 'b',
-        'base', 'bdi', 'bdo', 'blockquote',
-        'body', 'br', 'button', 'canvas',
-        'caption', 'cite', 'code', 'col',
-        'colgroup', 'data', 'datalist', 'dd',
-        'del', 'details', 'dfn', 'dialog',
-        'div', 'dl', 'dt', 'em', 'embed',
-        'fieldset', 'figcaption', 'figure',
-        'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-        'head', 'header', 'hr', 'html', 'i',
-        'iframe', 'img', 'input', 'title', 'html'
-    ]
-
 
     def __init__(self, path_to_file: str, context: dict={}):
         self.res_text: str = ''
@@ -30,18 +15,19 @@ class FoxEngine:
         This function renders the string.
         """
         context = self.context
-        tag: str = re.search(r'\w+', line)
-        if tag:
-            tag = tag.group(0)
-            if tag in self.tags:
-                if ('.' + tag) in line:
-                    line = line.replace('.' + tag, '</' + tag)
-                    if '\n' in line:
-                        line = line.replace('\n', '>\n')
-                    else:
-                        line += '>'
-                else:
-                    line = line.replace(tag, '<' + tag).replace('\n', '>\n')
+        tag: str = re.search(r'/\w+', line)
+        s = line.find('/')
+        
+        if s != -1 and len(line) - 1 > s and line[s + 1] != '/':
+            if line.find('\n') != -1:
+                line = line.replace('\n', '>\n')
+            else:
+                line += '>'
+            if s > 0 and line[s - 1] == '.':
+                line = line.replace('./', '</')
+            else:
+                line = line.replace('/', '<')
+            
         
         while '{{' in line and '}}' in line:
             left = line.find('{{')

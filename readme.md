@@ -17,18 +17,18 @@ obj.writeToFile('new_path') # saving to file by path: new_path
 ## Example
 ### Before (project/test.fox)
 ```html
-body
+/body
  % repeat 4 %
- h1
+ /h1
   {{ context['var'] }}
    START LOOP
    % repeat 2 %
    LOOOOOOOP
    % end %
    END LOOP
- .h1
+ ./h1
  % end %
-.body
+./body
 ```
 ### Start this code
 ```python
