@@ -1,7 +1,7 @@
 import unittest
 from os.path import join 
 from os import getcwd, remove
-from foxTemplateEngine import FoxEngine
+from foxTemplateEngine.template_engine import FoxEngine
 
 
 class EngineTest(unittest.TestCase):
